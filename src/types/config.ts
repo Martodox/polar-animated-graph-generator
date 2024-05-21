@@ -1,22 +1,30 @@
 export type TimeString = string;
 
+export type DataSource = "polarCsv" | "garminFit" | "oxiwearCsv";
+
 export interface DataSection {
-    "name": string,
-    "startTime": TimeString
-    "endTime": TimeString,
-    "timerStart": TimeString
-    "timerEnd": TimeString,
-    "addEndingAudioSeconds"?: number;
+    name: string,
+    startTime: TimeString
+    endTime: TimeString,
+    timerStart: TimeString
+    timerEnd: TimeString,
+    addEndingAudioSeconds?: number;
+    use: SourceUse[],
+}
+
+export interface SourceUse {
+    source: DataSource,
+    label?: string,
+    offsetInSeconds?: number,
 }
 
 export interface Config {
-    "inputFile": string,
-    "offsetInSeconds": number,
-    "stepResolution": number,
+    sources: { [k in DataSource]: string },
+    offsetInSeconds: number,
+    stepResolution: number,
     textOnly: boolean,
     sections: DataSection[],
-    "devMode": boolean
-    
+    devMode: boolean,
     basedHeight: number,
     baseWidth: number,
     sizeMultiplier: number,
